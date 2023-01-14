@@ -1,3 +1,6 @@
-# Remove the configurations of the IDEs and Test Editors
+# Ignore the configurations of the IDEs and Test Editors
 .vscode
 .idea
+
+# Ignore environment file
+.env
