@@ -1,6 +1,6 @@
 FROM php:8.2.0RC6-apache-bullseye
 
-CMD ["bash"]
+#CMD ["bash"]
 
 #RUN apt-get update -yq && apt-get upgrade -yq
 #RUN apt-get install openssh-server -yq
@@ -14,4 +14,5 @@ COPY . /var/www/html/
 EXPOSE 80
 #EXPOSE 22
 
-ENTRYPOINT ["bash", "-c", "/usr/sbin/sshd && apache2-foreground"]
+# ENTRYPOINT ["bash", "-c", "/usr/sbin/sshd && apache2-foreground"]
+ENTRYPOINT ["bash", "-c", "apache2-foreground"]
