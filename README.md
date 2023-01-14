@@ -11,4 +11,4 @@ by our existing internal judge platform, Contester.
 
 ---
 
-Made by [ComputerGeek5](https://github.com/ComputerGeek5) and [Detjon Mataj](https://github.com/detjonmataj) .
+Made by [ComputerGeek5](https://github.com/ComputerGeek5) and [Detjon Mataj](https://github.com/detjonmataj).
