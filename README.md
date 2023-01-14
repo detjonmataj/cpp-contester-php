@@ -1,7 +1,5 @@
 # Contester++
 
----
-
 This is our project for the CEN 311 Web Technologies and Programming course, Fall Semester, BSc. in Computer Engineering,
 Epoka University.
 
