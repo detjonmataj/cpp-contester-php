@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  database:
+    container_name: contesterpp-db
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: contesterpp_db
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysql
+    ports:
+      - "3306:3306"
+  web:
+    build: .
+    container_name: contesterpp-web
+    depends_on:
+      - database
+    volumes:
+      - ./:/var/www/html/
+    ports:
+      - "80:80"
+    stdin_open: true
+    tty: true

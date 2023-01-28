@@ -1,5 +1,9 @@
 # How to Run
 
+Open the terminal and go the project directory. Run the command below to start the application.
+
 ```console
-docker build -t contesterpp-web-image:1.0 . && docker run -p 80:80 --name contesterPP-web -v "$(pwd)":/var/www/html contesterpp-web-image:1.0
+docker compose up
 ```
+
+Open your web browser and enter http://localhost:80 in your address bar to view the application.

@@ -1,0 +1,8 @@
+HELP.md
+README.md
+.gitignore
+.env.example
+
+# IDE files
+.idea
+.vscode
