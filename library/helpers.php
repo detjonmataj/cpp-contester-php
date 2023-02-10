@@ -78,14 +78,14 @@ function routeURL($url)
 }
 
 spl_autoload_register(function ($className) {
-    if (file_exists(ROOT . DS . 'library' . DS . strtolower($className) . '.php')) {
-        require_once(ROOT . DS . 'library' . DS . strtolower($className) . '.php');
-    } else if (file_exists(ROOT . DS . 'application' . DS . 'controllers' . DS . strtolower($className) . '.php')) {
-        require_once(ROOT . DS . 'application' . DS . 'controllers' . DS . strtolower($className) . '.php');
-    } else if (file_exists(ROOT . DS . 'application' . DS . 'controllers' . DS . strtolower($className) . '.php')) {
-        require_once(ROOT . DS . 'util' . DS . strtolower($className) . '.php');
-    } else if (file_exists(ROOT . DS . 'application' . DS . 'models' . DS . strtolower($className) . '.php')) {
-        require_once(ROOT . DS . 'application' . DS . 'models' . DS . strtolower($className) . '.php');
+    if (file_exists(ROOT . DS . 'library' . DS . ucfirst($className) . '.php')) {
+        require_once(ROOT . DS . 'library' . DS . ucfirst($className) . '.php');
+    } else if (file_exists(ROOT . DS . 'application' . DS . 'controllers' . DS . ucfirst($className) . '.php')) {
+        require_once(ROOT . DS . 'application' . DS . 'controllers' . DS . ucfirst($className) . '.php');
+    } else if (file_exists(ROOT . DS . 'application' . DS . 'controllers' . DS . ucfirst($className) . '.php')) {
+        require_once(ROOT . DS . 'util' . DS . ucfirst($className) . '.php');
+    } else if (file_exists(ROOT . DS . 'application' . DS . 'models' . DS . ucfirst($className) . '.php')) {
+        require_once(ROOT . DS . 'application' . DS . 'models' . DS . ucfirst($className) . '.php');
     } else {
         /* Error Generation Code Here */
     }
