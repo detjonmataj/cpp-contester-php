@@ -6,33 +6,14 @@
     <title>{{title}}</title>
 </head>
 <body>
-<nav>
-    <div>
-        <a href="#">{{app_name}}</a>
-        <div>
-            <ul>
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/demos">Demos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/register">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
-                </li>
-            </ul>
 
-        </div>
+    {{navbar}}
+
+    <div class="container">
+        {{main_content}}
     </div>
-</nav>
-<div class="container">
-    {{main_content}}
-</div>
+
+    {{footer}}
+
 </body>
 </html>

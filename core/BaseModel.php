@@ -35,7 +35,16 @@ abstract class BaseModel
      */
     abstract public function rules(): array;
 
-    public function labels():array {
+    public function labels(): array {
+        return [];
+    }
+
+    /**
+     * @return array - simple array of string values that represent the attributes of each model
+     */
+
+    public function attributes(): array
+    {
         return [];
     }
 

@@ -10,12 +10,6 @@ abstract class DbModel extends BaseModel
     abstract public function tableName(): string;
 
     /**
-     * @return array - simple array of string values that represent the database attributes of each model
-     */
-
-    abstract public function attributes(): array;
-
-    /**
      * @return string - primary key in the database for each model
      * Usually is id but consider a Book model with ISBN as primary key
      */
