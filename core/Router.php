@@ -38,9 +38,12 @@ class Router
         // in the params array, we can add variables that we want to use in the view
         $layout = $this->getLayoutContent();
         $viewContent = $this->getView($view, $params);
-        // layouts will contain a string {{main_content}} in order to replace it with the actual content of that page
+        $navbar = $params['navbar'] ?? $this->getComponentContent('navbar.default', $params);
+        $footer = $params['footer'] ?? $this->getComponentContent('footer.default', $params);
+        // layouts will contain a string in order to replace it with the actual content of that page Eg: {{main_content}}
         $content = str_replace('{{main_content}}', $viewContent, $layout);
-        $content = str_replace('{{app_name}}', Application::$APP->name(), $content);
+        $content = str_replace('{{navbar}}', $navbar, $content);
+        $content = str_replace('{{footer}}', $footer, $content);
         $title = Application::name() . ' | ' . ucfirst($view);
         return str_replace('{{title}}', $title, $content);
     }
@@ -52,6 +55,13 @@ class Router
             $layout = Application::$APP->getController()->getLayout();
         ob_start(); // nothing gets outputted in the browser
         require_once "views/layouts/$layout.php";
+        return ob_get_clean();
+    }
+
+    public function getComponentContent(string $component, array $params = []): false|string
+    {
+        ob_start(); // nothing gets outputted in the browser
+        require_once "views/components/$component.php";
         return ob_get_clean();
     }
 
