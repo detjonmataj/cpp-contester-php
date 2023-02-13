@@ -38,12 +38,8 @@ class Router
         // in the params array, we can add variables that we want to use in the view
         $layout = $this->getLayoutContent();
         $viewContent = $this->getView($view, $params);
-        $navbar = $params['navbar'] ?? $this->getComponentContent('navbar.default', $params);
-        $footer = $params['footer'] ?? $this->getComponentContent('footer.default', $params);
         // layouts will contain a string in order to replace it with the actual content of that page Eg: {{main_content}}
         $content = str_replace('{{main_content}}', $viewContent, $layout);
-        $content = str_replace('{{navbar}}', $navbar, $content);
-        $content = str_replace('{{footer}}', $footer, $content);
         $title = Application::name() . ' | ' . ucfirst($view);
         return str_replace('{{title}}', $title, $content);
     }
@@ -54,14 +50,20 @@ class Router
         if(Application::$APP->getController())
             $layout = Application::$APP->getController()->getLayout();
         ob_start(); // nothing gets outputted in the browser
-        require_once "views/layouts/$layout.php";
-        return ob_get_clean();
+        $basePath = "views/layouts/";
+        $filename = (file_exists($basePath . $layout . '.php')) ? $layout . '.php' : 'main.php';
+        require_once $basePath . $filename;
+        $content = ob_get_clean();
+        $navbar = $this->getComponentContent("navbar.$layout") ?: $this->getComponentContent("navbar.main");
+        $footer = $this->getComponentContent("footer.$layout") ?: $this->getComponentContent("footer.main");
+        $content = str_replace('{{navbar}}', $navbar, $content);
+        return str_replace('{{footer}}', $footer, $content);
     }
 
     public function getComponentContent(string $component, array $params = []): false|string
     {
         ob_start(); // nothing gets outputted in the browser
-        require_once "views/components/$component.php";
+        @include_once "views/components/$component.php";
         return ob_get_clean();
     }
 

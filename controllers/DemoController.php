@@ -5,6 +5,7 @@ require_once 'exceptions/UnauthorizedException.php';
 
 class DemoController extends BaseController
 {
+    protected string $layout = 'demo';
     /**
      * @throws UnauthorizedException
      */
