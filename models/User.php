@@ -62,7 +62,7 @@ class User extends DbModel
         return ['first_name', 'last_name', 'username', 'email', 'password', 'created_by'];
     }
 
-    public static function findOne(array $where, $tableName = self::TABLE_NAME): User
+    public static function findOne(array $where, $tableName = self::TABLE_NAME): ?User
     {
         return parent::findOne($where, $tableName);
     }

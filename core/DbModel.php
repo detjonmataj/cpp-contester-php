@@ -58,6 +58,6 @@ abstract class DbModel extends BaseModel
         }
         $stmt->execute();
         $obj = @$stmt->fetchObject(static::class);
-        return $obj ?: new static();
+        return $obj ?: null;
     }
 }
