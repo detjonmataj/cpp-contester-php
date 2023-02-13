@@ -19,7 +19,6 @@ class LoginModel extends BaseModel
     public function login(): bool
     {
         $user = User::findOne(['email'=>$this->email]);
-        // user should be evaluated at this point, but keeping it for now
         if(!$user) {
             $this->addError('email','User does not exist');
             return false;
