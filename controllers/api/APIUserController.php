@@ -9,11 +9,6 @@ class APIUserController extends BaseController
         return 'get - users';
     }
 
-    public function getAll(): string|array|false
-    {
-        return 'getAll - users';
-    }
-
     public function create(): string|array|false
     {
         return 'create - users';

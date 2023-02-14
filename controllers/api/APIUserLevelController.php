@@ -9,11 +9,6 @@ class APIUserLevelController extends BaseController
         return 'get - user_levels';
     }
 
-    public function getAll(): string|array|false
-    {
-        return 'getAll - user_levels';
-    }
-
     public function create(): string|array|false
     {
         return 'create - user_levels';
