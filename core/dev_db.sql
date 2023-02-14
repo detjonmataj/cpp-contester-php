@@ -1004,4 +1004,4 @@ VALUES (1, 'Student'),
        (3, 'Admin');
 
 INSERT IGNORE INTO `users` (`user_id`, `username`, `password`, `email`, `user_level_id`, `created_by`)
-VALUES (1, 'admin', 'admin', 'admin@cpp.edu', 3, 'admin');
+VALUES (1, 'admin', '{{admin_password}}', 'admin@cpp.edu', 3, 'admin');

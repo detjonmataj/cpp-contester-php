@@ -23,6 +23,7 @@ class DatabaseBootstrap
 
         try {
             $sql = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'dev_db.sql');
+            $sql = str_replace("{{admin_password}}", password_hash("admin", PASSWORD_DEFAULT), $sql);
 
             $pdo->exec($sql);
 //            $pdo->commit();
