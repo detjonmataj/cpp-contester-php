@@ -4,6 +4,9 @@ require_once 'core/Application.php';
 require_once 'controllers/SiteController.php';
 require_once 'controllers/AuthController.php';
 require_once 'controllers/DemoController.php';
+require_once 'controllers/QuestionController.php';
+require_once 'controllers/AccountController.php';
+require_once 'controllers/SettingController.php';
 require_once 'core/DatabaseBootstrap.php';
 require_once 'core/utils/DotEnvParser.php';
 
@@ -29,5 +32,11 @@ $app->getRouter()->get('/register', [AuthController::class, 'register']);
 $app->getRouter()->post('/register', [AuthController::class, 'register']);
 $app->getRouter()->get('/logout', [AuthController::class, 'logout']);
 $app->getRouter()->get('/demos', [DemoController::class, 'list']);
+
+$app->getRouter()->get('/questions', [QuestionController::class, 'list']);
+$app->getRouter()->get('/question_categories', [QuestionController::class, 'categories']);
+$app->getRouter()->get('/question_levels', [QuestionController::class, 'levels']);
+$app->getRouter()->get('/account', [AccountController::class, 'account']);
+$app->getRouter()->get('/settings', [SettingController::class, 'settings']);
 
 $app->start();
