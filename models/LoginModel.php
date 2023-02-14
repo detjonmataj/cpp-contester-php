@@ -9,10 +9,9 @@ class LoginModel extends BaseModel
     public string $password = '';
     public function rules(): array
     {
-        $passwordRegex = "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$/";
         return [
             'email' => [self::RULE_REQUIRED, self::RULE_EMAIL],
-            'password' => [self::RULE_REQUIRED, [self::RULE_PREG_MATCH, $passwordRegex, "Password very week"]]
+            'password' => [self::RULE_REQUIRED]
         ];
     }
 
