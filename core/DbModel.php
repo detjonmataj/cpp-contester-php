@@ -21,7 +21,7 @@ abstract class DbModel extends BaseModel
      * Generic query to save DB models, you don't have to write a separate query for each model
      * Just make sure to define attributes correctly for each model
      */
-    public function save(): true
+    public function save(): bool
     {
         $tableName = $this->tableName();
         $attributes = $this->attributes();
