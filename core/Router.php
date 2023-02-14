@@ -18,6 +18,21 @@ class Router
         $this->routes[Request::POST][$path] = $callback; // register the given path as a post request
     }
 
+    public function put($path, $callback): void
+    {
+        $this->routes[Request::PUT][$path] = $callback; // register the given path as a put request
+    }
+
+    public function patch($path, $callback): void
+    {
+        $this->routes[Request::PATCH][$path] = $callback; // register the given path as a patch request
+    }
+
+    public function delete($path, $callback): void
+    {
+        $this->routes[Request::DELETE][$path] = $callback; // register the given path as a delete request
+    }
+
     public function resolve() {
         $path = Request::path();
         $method = Request::method();
