@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once 'core/DbModel.php';
 
@@ -10,11 +10,12 @@ class User extends DbModel
     public string $password = '';
     public string $email = '';
     // Keeping these as hardcoded values for now
-    public string $created_by = 'Detjon';
+    public string $created_by = '';
+    public int $user_level_id = 1;
 
     private const TABLE_NAME = 'users';
 
-    public function save(): true
+    public function save(): bool
     {
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
         return parent::save();
@@ -29,6 +30,8 @@ class User extends DbModel
             'username' => [self::RULE_REQUIRED, self::RULE_USERNAME, [self::RULE_UNIQUE, self::class]],
             'email' => [self::RULE_REQUIRED, self::RULE_EMAIL, [self::RULE_UNIQUE, self::class]],
             'password' => [self::RULE_REQUIRED, [self::RULE_PREG_MATCH, $passwordRegex, "Password very week"]],
+            'created_by' => [self::RULE_REQUIRED],
+            'user_level_id' => [self::RULE_REQUIRED],
         ];
     }
 
@@ -44,6 +47,8 @@ class User extends DbModel
             'username' => 'Username',
             'email' => 'Email',
             'password' => 'Password',
+            'created_by' => 'Created by',
+            'user_level_id' => 'Role',
         ];
     }
 
@@ -59,7 +64,7 @@ class User extends DbModel
      */
     public function attributes(): array
     {
-        return ['first_name', 'last_name', 'username', 'email', 'password', 'created_by'];
+        return ['first_name', 'last_name', 'username', 'email', 'password', 'created_by', 'user_level_id'];
     }
 
     public static function findOne(array $where, $tableName = self::TABLE_NAME): ?User
