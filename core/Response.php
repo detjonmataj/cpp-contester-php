@@ -12,7 +12,7 @@ class Response
         header('Location:' . $url);
     }
 
-    public static function json(array $data): string|false
+    public static function json(array|object $data): string|false
     {
         header('Content-Type: application/json');
         $encoded = json_encode($data);

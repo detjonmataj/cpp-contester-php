@@ -14,7 +14,12 @@ class UListModel extends LinkModel
         return parent::attributes()[] = ['items' => $this->items ];
     }
 
-    public function rules(): array
+    public function createRules(): array
+    {
+        return [];
+    }
+
+    public function updateRules(): array
     {
         return [];
     }

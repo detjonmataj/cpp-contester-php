@@ -18,7 +18,12 @@ class LinkModel extends BaseModel
         $this->classes = $classes;
     }
 
-    public function rules(): array
+    public function createRules(): array
+    {
+        return [];
+    }
+
+    public function updateRules(): array
     {
         return [];
     }

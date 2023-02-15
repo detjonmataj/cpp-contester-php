@@ -4,16 +4,22 @@ require_once 'core/DbModel.php';
 
 class UserLevel extends DbModel
 {
+    public int $user_level_id;
     public string $name;
     public string $description;
 
     private const TABLE_NAME = 'user_levels';
 
-    public function rules(): array
+    public function createRules(): array
     {
         return [
             'name' => [self::RULE_REQUIRED],
         ];
+    }
+
+    public function updateRules(): array
+    {
+        return [];
     }
 
     /**

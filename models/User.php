@@ -28,8 +28,15 @@ class User extends DbModel
         return parent::save();
     }
 
-    public function rules(): array
+    public function update(): bool
     {
+        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+        return parent::update();
+    }
+
+    public function createRules(): array
+    {
+        // At least 1 uppercase letter, 1 number, 1 special character, 8-32 characters
         $passwordRegex = "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$/";
         return [
             'first_name' => [self::RULE_REQUIRED],
@@ -39,6 +46,15 @@ class User extends DbModel
             'password' => [self::RULE_REQUIRED, [self::RULE_PREG_MATCH, $passwordRegex, "Password very week"]],
             'created_by' => [self::RULE_REQUIRED],
             'user_level_id' => [self::RULE_REQUIRED],
+        ];
+    }
+
+    public function updateRules(): array
+    {
+        // At least 1 uppercase letter, 1 number, 1 special character, 8-32 characters
+        $passwordRegex = "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$/";
+        return [
+            'password' => [[self::RULE_PREG_MATCH, $passwordRegex, "Password very week"]],
         ];
     }
 
