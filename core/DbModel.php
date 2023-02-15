@@ -68,16 +68,41 @@ abstract class DbModel extends BaseModel
      * Generic query to search for a single row
      * If you want to search for User with first name Foo and last name Bar pass $where = ['firstName'=>'Foo', 'lastName' => 'Bar']
      */
-    public static function findOne(array $where, $tableName): ?self
+    public static function findOne(array $where, string $tableName): ?self
     {
-        $attributes = array_keys($where);
-        $str = implode("and ", array_map(fn($x) => "$x = :$x", $attributes));
-        $stmt = self::prepare("select * from $tableName where $str;");
+        return self::findAll($where, ['limit', 1], $tableName)[0] ?? null;
+    }
+
+    /**
+     * @param array $where - an associative array containing query params you want to search
+     * @param $tableName - table name
+     * @return DbModel|null Generic query to search for a single row
+     * Generic query to search for a single row
+     * If you want to search for User with first name Foo and last name Bar pass $where = ['firstName'=>'Foo', 'lastName' => 'Bar']
+     */
+    public static function findAll(array $where, array $extraClauses, string $tableName): ?array
+    {
+        $query = "select * from $tableName";
+
+        if (!empty($where)) {
+            $attributes = array_keys($where);
+            $str = implode("and ", array_map(fn($x) => "$x = :$x", $attributes));
+            $query .= " where $str ";
+        }
+
+        if (!empty($extraClauses)) {
+            $query .= implode(' ', $extraClauses);
+        }
+
+        $query .= ';';
+
+        $stmt = self::prepare($query);
         foreach ($where as $k => $v) {
             $stmt->bindValue(":$k", $v);
         }
+
         $stmt->execute();
-        $obj = @$stmt->fetchObject(static::class);
+        $obj = @$stmt->fetchAll(PDO::FETCH_CLASS, static::class);
         return $obj ?: null;
     }
 }

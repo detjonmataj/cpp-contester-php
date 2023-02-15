@@ -48,6 +48,11 @@ class UserLevel extends DbModel
         return parent::findOne($where, $tableName);
     }
 
+    public static function findAll(array $where, array $extraClauses, $tableName = self::TABLE_NAME): ?array
+    {
+        return parent::findAll($where, $extraClauses, $tableName);
+    }
+
 
     public function primaryKey(): string
     {
