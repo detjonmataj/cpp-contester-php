@@ -4,14 +4,21 @@ require_once 'core/DbModel.php';
 
 class User extends DbModel
 {
-    public string $first_name = '';
-    public string $last_name = '';
-    public string $username = '';
-    public string $password = '';
-    public string $email = '';
-    // Keeping these as hardcoded values for now
-    public string $created_by = '';
-    public int $user_level_id = 1;
+    public int $user_id;
+    public string $first_name;
+    public string $last_name;
+    public string $username;
+    public string $password;
+    public string $email;
+    public string $created_by;
+    public int $user_level_id;
+    public string $created_at;
+
+    // Important: To skip mapping columns from findOne and findAll methods, mark the properties as private
+    private string|null $birthday;
+    private int|null $questions_submitted;
+    private int|null $questions_solved;
+    private int|null $questions_rejected;
 
     private const TABLE_NAME = 'users';
 
@@ -67,9 +74,14 @@ class User extends DbModel
         return ['first_name', 'last_name', 'username', 'email', 'password', 'created_by', 'user_level_id'];
     }
 
-    public static function findOne(array $where, $tableName = self::TABLE_NAME): ?User
+    public static function findOne(array $where, string $tableName = self::TABLE_NAME): ?User
     {
         return parent::findOne($where, $tableName);
+    }
+
+    public static function findAll(array $where, array $extraClauses, string $tableName = self::TABLE_NAME ): ?array
+    {
+        return parent::findAll($where, $extraClauses, $tableName);
     }
 
 
