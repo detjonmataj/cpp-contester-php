@@ -55,7 +55,8 @@ class Router
         $viewContent = $this->getView($view, $params);
         // layouts will contain a string in order to replace it with the actual content of that page Eg: {{main_content}}
         $content = str_replace('{{main_content}}', $viewContent, $layout);
-        $title = Application::name() . ' | ' . ucfirst($view);
+        $viewName = explode('.', $view);
+        $title = Application::name() . ' | ' . ucfirst($viewName[0]);
         return str_replace('{{title}}', $title, $content);
     }
 
