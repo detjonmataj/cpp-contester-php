@@ -11,4 +11,11 @@ class Response
     {
         header('Location:' . $url);
     }
+
+    public static function json(array $data): string
+    {
+        header('Content-Type: application/json');
+        return json_encode($data);
+    }
+
 }
