@@ -32,8 +32,28 @@ abstract class DbModel extends BaseModel
         foreach ($attributes as $attribute) {
             $stmt->bindValue(":$attribute", $this->{$attribute});
         }
-        $stmt->execute();
-        return true;
+        return $stmt->execute();
+    }
+
+    public function update(): bool
+    {
+        $tableName = $this->tableName();
+        $attributes = $this->attributes();
+        $sql = "update $tableName set " . implode(',', array_map(fn($x) => "$x = :$x", $attributes))
+            . " where " . $this->primaryKey() . " = " . $this->{$this->primaryKey()};
+        $stmt = self::prepare($sql);
+        foreach ($attributes as $attribute) {
+            $stmt->bindValue(":$attribute", $this->{$attribute});
+        }
+        return $stmt->execute();
+    }
+
+    public function delete(): bool
+    {
+        $tableName = $this->tableName();
+        $sql = "delete from $tableName where " . $this->primaryKey() . " = " . $this->{$this->primaryKey()};
+        $stmt = self::prepare($sql);
+        return $stmt->execute();
     }
 
     public static function prepare($sql): false|PDOStatement
