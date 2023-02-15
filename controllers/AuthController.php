@@ -9,6 +9,10 @@ class AuthController extends BaseController
 
     public function login(): false|array|string|null
     {
+        if(Application::$APP->isAuthenticated()) {
+            Response::redirect('/');
+            return null;
+        }
         $loginForm = new LoginModel();
         if(Request::isPost()) {
             $loginForm->loadData(Request::requestBody());
@@ -21,6 +25,10 @@ class AuthController extends BaseController
     }
 
     public function register() {
+        if(Application::$APP->isAuthenticated()) {
+            Response::redirect('/');
+            return null;
+        }
         $user = new User();
         if(Request::isPost()) {
             $user->loadData(Request::requestBody());
