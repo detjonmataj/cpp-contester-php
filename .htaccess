@@ -1,2 +1,5 @@
-RewriteEngine on
-RewriteRule ^.*$ index.php [QSA,L]
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteCond %{REQUEST_FILENAME} !assets/
+    RewriteRule ^.*$ index.php [QSA,L]
+</IfModule>
