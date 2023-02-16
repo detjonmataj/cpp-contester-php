@@ -4,11 +4,6 @@ require_once 'core/BaseController.php';
 
 class UserLevelController extends BaseController
 {
-    public function edit(): string|array|false
-    {
-        return Application::$APP->getRouter()->renderView('init', ['endpoint' => '/user_levels/edit']);
-    }
-
     public function list(): string|array|false
     {
         return Application::$APP->getRouter()->renderView('init', ['endpoint' => '/user_levels']);
@@ -17,5 +12,10 @@ class UserLevelController extends BaseController
     public function create(): string|array|false
     {
         return Application::$APP->getRouter()->renderView('init', ['endpoint' => '/user_levels/create']);
+    }
+
+    public function edit(): string|array|false
+    {
+        return Application::$APP->getRouter()->renderView('init', ['endpoint' => '/user_levels/edit']);
     }
 }
