@@ -5,6 +5,7 @@ require_once 'controllers/api/APIUserLevelController.php';
 require_once 'controllers/api/APIQuestionController.php';
 require_once 'controllers/api/APIQuestionLevelController.php';
 require_once 'controllers/api/APIQuestionCategoryController.php';
+require_once 'controllers/api/APITestCaseController.php';
 
 // users
 $app->getRouter()->get('/api/users', [APIUserController::class, 'get']);
@@ -35,3 +36,9 @@ $app->getRouter()->get('/api/question_categories', [APIQuestionCategoryControlle
 $app->getRouter()->post('/api/question_categories/create', [APIQuestionCategoryController::class, 'create']);
 $app->getRouter()->put('/api/question_categories/update', [APIQuestionCategoryController::class, 'update']);
 $app->getRouter()->delete('/api/question_categories/delete', [APIQuestionCategoryController::class, 'delete']);
+
+// test_cases
+$app->getRouter()->get('/api/test_cases', [APITestCaseController::class, 'get']);
+$app->getRouter()->post('/api/test_cases/create', [APITestCaseController::class, 'create']);
+$app->getRouter()->put('/api/test_cases/update', [APITestCaseController::class, 'update']);
+$app->getRouter()->delete('/api/test_cases/delete', [APITestCaseController::class, 'delete']);

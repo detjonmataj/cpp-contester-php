@@ -32,7 +32,7 @@ class APIUserLevelController extends BaseController
             $user_levels = UserLevel::findAll([], []);
             Response::setStatusCode(200);
             return Response::json($user_levels);
-        } catch (Exception) {
+        } catch (Exception|Error) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when retrieving user levels.']);
         }
@@ -63,7 +63,7 @@ class APIUserLevelController extends BaseController
             $user_level->user_level_id = (int)$user_level_id;
             Response::setStatusCode(201);
             return Response::json($user_level);
-        } catch (Exception) {
+        } catch (Exception|Error) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when creating user level.']);
         }
@@ -105,7 +105,7 @@ class APIUserLevelController extends BaseController
 
             Response::setStatusCode(200);
             return Response::json($user_level);
-        } catch (Exception) {
+        } catch (Exception|Error) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when editing user level.']);
         }
@@ -145,7 +145,7 @@ class APIUserLevelController extends BaseController
 
             Response::setStatusCode(200);
             return Response::json(['message' => 'User level deleted successfully !']);
-        } catch (Exception) {
+        } catch (Exception|Error) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when deleting user level.']);
         }

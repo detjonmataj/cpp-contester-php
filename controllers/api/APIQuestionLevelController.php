@@ -27,7 +27,7 @@ class APIQuestionLevelController extends BaseController
             $question_levels = QuestionLevel::findAll([], []);
             Response::setStatusCode(200);
             return Response::json($question_levels);
-        } catch (Exception) {
+        } catch (Exception|Error) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when retrieving question levels.']);
         }
@@ -58,7 +58,7 @@ class APIQuestionLevelController extends BaseController
             $question_level->question_level_id = (int)$question_level_id;
             Response::setStatusCode(201);
             return Response::json($question_level);
-        } catch (Exception) {
+        } catch (Exception|Error) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when creating question level.']);
         }
@@ -72,16 +72,16 @@ class APIQuestionLevelController extends BaseController
                 return Response::json(['message' => 'You are not logged in.']);
             }
 
+            if (!Application::$APP->getUser()->isAdmin() && !Application::$APP->getUser()->isTeacher()) {
+                Response::setStatusCode(403);
+                return Response::json(['message' => 'You are not allowed to edit question levels.']);
+            }
+
             $request_question_level_id = (int)$_REQUEST['question_level_id'] ?? null;
 
             if (is_null($request_question_level_id)) {
                 Response::setStatusCode(400);
                 return Response::json(['message' => 'Failed to edit question level, question_level_id must be specified in the query parameters.']);
-            }
-
-            if (!Application::$APP->getUser()->isAdmin() && !Application::$APP->getUser()->isTeacher()) {
-                Response::setStatusCode(403);
-                return Response::json(['message' => 'You are not allowed to edit question levels.']);
             }
 
             if (is_null(QuestionLevel::findOne(['question_level_id' => $request_question_level_id]))) {
@@ -100,7 +100,7 @@ class APIQuestionLevelController extends BaseController
 
             Response::setStatusCode(200);
             return Response::json($question_level);
-        } catch (Exception) {
+        } catch (Exception|Error) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when editing question level.']);
         }
@@ -114,16 +114,16 @@ class APIQuestionLevelController extends BaseController
                 return Response::json(['message' => 'You are not logged in.']);
             }
 
+            if (!Application::$APP->getUser()->isAdmin() && !Application::$APP->getUser()->isTeacher()) {
+                Response::setStatusCode(403);
+                return Response::json(['message' => 'You are not allowed to delete question levels.']);
+            }
+
             $request_question_level_id = $_REQUEST['question_level_id'] ?? null;
 
             if (is_null($request_question_level_id)) {
                 Response::setStatusCode(400);
                 return Response::json(['message' => 'Failed to delete question level, question_level_id must be specified in the query parameters.']);
-            }
-
-            if (!Application::$APP->getUser()->isAdmin() && !Application::$APP->getUser()->isTeacher()) {
-                Response::setStatusCode(403);
-                return Response::json(['message' => 'You are not allowed to delete question levels.']);
             }
 
             $question_level = QuestionLevel::findOne(['question_level_id' => $request_question_level_id]);
@@ -136,12 +136,11 @@ class APIQuestionLevelController extends BaseController
             if (!$question_level->delete()) {
                 Response::setStatusCode(500);
                 return Response::json(['message' => 'Something went wrong when deleting question level.']);
-
             }
 
             Response::setStatusCode(200);
             return Response::json(['message' => 'Question level deleted successfully !']);
-        } catch (Exception) {
+        } catch (Exception|Error) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when deleting question level.']);
         }
