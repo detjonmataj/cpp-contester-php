@@ -31,8 +31,8 @@ class Application {
         $this->router = new Router();
         $this->db = new Database($dbConfig);
         if($this->isAuthenticated()) {
-            $email = $_SESSION['email'];
-            $this->user = User::findOne(['email' => $email]);
+            $user_id = $_SESSION['user_id'];
+            $this->user = User::findOne(['user_id' => $user_id]);
         }
     }
 
@@ -87,7 +87,8 @@ class Application {
         }
         session_regenerate_id();
         $_SESSION['auth'] = true;
-        $_SESSION['email'] = $user->email;
+        $primary_key = $user->primaryKey();
+        $_SESSION[$primary_key] = $user->{$primary_key};
         $this->user = $user; // save the user so that you can use it globally
     }
 
