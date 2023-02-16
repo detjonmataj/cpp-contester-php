@@ -13,6 +13,11 @@ class APIUserLevelController extends BaseController
                 return Response::json(['message' => 'You are not logged in.']);
             }
 
+            if (!Application::$APP->getUser()->isAdmin()) {
+                Response::setStatusCode(403);
+                return Response::json(['message' => 'You are not allowed to retrieve user levels.']);
+            }
+
             if (!empty($_GET)) {
                 $userLevel = UserLevel::findOne($_GET);
                 if (is_null($userLevel)) {
@@ -72,16 +77,16 @@ class APIUserLevelController extends BaseController
                 return Response::json(['message' => 'You are not logged in.']);
             }
 
+            if (!Application::$APP->getUser()->isAdmin()) {
+                Response::setStatusCode(403);
+                return Response::json(['message' => 'You are not allowed to edit user levels.']);
+            }
+
             $request_user_level_id = (int)$_REQUEST['user_level_id'] ?? null;
 
             if (is_null($request_user_level_id)) {
                 Response::setStatusCode(400);
-                return Response::json(['message' => 'Failed to edit user level.', 'errors' => ['user_level_id' => 'User level ID must be specified in the query parameters.']]);
-            }
-
-            if (!Application::$APP->getUser()->isAdmin()) {
-                Response::setStatusCode(403);
-                return Response::json(['message' => 'You are not allowed to edit user levels.']);
+                return Response::json(['message' => 'Failed to edit user level, user_level_id must be specified in the query parameters.']);
             }
 
             if (is_null(UserLevel::findOne(['user_level_id' => $request_user_level_id]))) {
@@ -89,17 +94,17 @@ class APIUserLevelController extends BaseController
                 return Response::json(['message' => 'User level with user_level_id ' . $request_user_level_id . ' not found.']);
             }
 
-            $user = new UserLevel();
-            $user->loadData(Request::requestBody());
-            $user->user_level_id = $request_user_level_id;
+            $user_level = new UserLevel();
+            $user_level->loadData(Request::requestBody());
+            $user_level->user_level_id = $request_user_level_id;
 
-            if (!$user->update()) {
+            if (!$user_level->update()) {
                 Response::setStatusCode(500);
                 return Response::json(['message' => 'Something went wrong when editing user level.']);
             }
 
             Response::setStatusCode(200);
-            return Response::json($user);
+            return Response::json($user_level);
         } catch (Exception) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when editing user level.']);
@@ -114,32 +119,32 @@ class APIUserLevelController extends BaseController
                 return Response::json(['message' => 'You are not logged in.']);
             }
 
-            $request_user_level_id = $_REQUEST['user_level_id'] ?? null;
-
-            if (is_null($request_user_level_id)) {
-                Response::setStatusCode(400);
-                return Response::json(['message' => 'Failed to delete user level.', 'errors' => ['user_level_id' => 'User level ID must be specified in the query parameters.']]);
-            }
-
             if (!Application::$APP->getUser()->isAdmin()) {
                 Response::setStatusCode(403);
                 return Response::json(['message' => 'You are not allowed to delete user levels.']);
             }
 
-            $user = UserLevel::findOne(['user_level_id' => $request_user_level_id]);
+            $request_user_level_id = $_REQUEST['user_level_id'] ?? null;
 
-            if (is_null($user)) {
+            if (is_null($request_user_level_id)) {
+                Response::setStatusCode(400);
+                return Response::json(['message' => 'Failed to delete user level, user_level_id must be specified in the query parameters.']);
+            }
+
+            $user_level = UserLevel::findOne(['user_level_id' => $request_user_level_id]);
+
+            if (is_null($user_level)) {
                 Response::setStatusCode(404);
                 return Response::json(['message' => 'User level with user_level_id ' . $request_user_level_id . ' not found.']);
             }
 
-            if ($user->delete()) {
-                Response::setStatusCode(200);
-                return Response::json(['message' => 'User level deleted successfully !']);
-            } else {
+            if (!$user_level->delete()) {
                 Response::setStatusCode(500);
                 return Response::json(['message' => 'Failed to delete user level.']);
             }
+
+            Response::setStatusCode(200);
+            return Response::json(['message' => 'User level deleted successfully !']);
         } catch (Exception) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when deleting user level.']);

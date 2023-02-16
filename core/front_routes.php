@@ -3,11 +3,12 @@
 require_once 'controllers/SiteController.php';
 require_once 'controllers/AuthController.php';
 require_once 'controllers/DemoController.php';
-require_once 'controllers/QuestionController.php';
 require_once 'controllers/AccountController.php';
 require_once 'controllers/SettingController.php';
 require_once 'controllers/UserController.php';
 require_once 'controllers/UserLevelController.php';
+require_once 'controllers/QuestionController.php';
+require_once 'controllers/QuestionLevelController.php';
 
 // misc
 $app->getRouter()->get('/', [SiteController::class, 'home']);
@@ -38,8 +39,10 @@ $app->getRouter()->get('/questions', [QuestionController::class, 'list']);
 $app->getRouter()->get('/questions/create', [QuestionController::class, 'create']);
 $app->getRouter()->get('/questions/edit', [QuestionController::class, 'edit']);
 
+// question levels
+$app->getRouter()->get('/question_levels', [QuestionLevelController::class, 'list']);
+$app->getRouter()->get('/question_levels/create', [QuestionLevelController::class, 'create']);
+$app->getRouter()->get('/question_levels/edit', [QuestionLevelController::class, 'edit']);
+
 // question categories
 $app->getRouter()->get('/question_categories', [QuestionController::class, 'categories']);
-
-// question levels
-$app->getRouter()->get('/question_levels', [QuestionController::class, 'levels']);

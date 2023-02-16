@@ -1,6 +1,7 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once 'models/Question.php';
+require_once 'core/BaseController.php';
 
 class APIQuestionController extends BaseController
 {
@@ -57,8 +58,7 @@ class APIQuestionController extends BaseController
             $question->question_id = (int)$question_id;
             Response::setStatusCode(201);
             return Response::json($question);
-        } catch (Exception $e) {
-            return Response::json(['message' => $e->getMessage()]);
+        } catch (Exception) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when creating question.']);
         }
@@ -72,16 +72,16 @@ class APIQuestionController extends BaseController
                 return Response::json(['message' => 'You are not logged in.']);
             }
 
+            if (!Application::$APP->getUser()->isAdmin() && !Application::$APP->getUser()->isTeacher()) {
+                Response::setStatusCode(403);
+                return Response::json(['message' => 'You are not allowed to edit questions.']);
+            }
+
             $request_question_id = (int)$_REQUEST['question_id'] ?? null;
 
             if (is_null($request_question_id)) {
                 Response::setStatusCode(400);
-                return Response::json(['message' => 'Failed to edit question.', 'errors' => ['question_id' => 'Question ID must be specified in the query parameters.']]);
-            }
-
-            if (!Application::$APP->getUser()->isAdmin() && !Application::$APP->getUser()->isTeacher()) {
-                Response::setStatusCode(403);
-                return Response::json(['message' => 'You are not allowed to edit questions.']);
+                return Response::json(['message' => 'Failed to edit question, question_id must be specified in the query parameters.']);
             }
 
             if (is_null(Question::findOne(['question_id' => $request_question_id]))) {
@@ -89,17 +89,17 @@ class APIQuestionController extends BaseController
                 return Response::json(['message' => 'Question with question_id ' . $request_question_id . ' not found.']);
             }
 
-            $user = new Question();
-            $user->loadData(Request::requestBody());
-            $user->question_id = $request_question_id;
+            $question = new Question();
+            $question->loadData(Request::requestBody());
+            $question->question_id = $request_question_id;
 
-            if (!$user->update()) {
+            if (!$question->update()) {
                 Response::setStatusCode(500);
                 return Response::json(['message' => 'Something went wrong when editing question.']);
             }
 
             Response::setStatusCode(200);
-            return Response::json($user);
+            return Response::json($question);
         } catch (Exception) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when editing question.']);
@@ -114,32 +114,32 @@ class APIQuestionController extends BaseController
                 return Response::json(['message' => 'You are not logged in.']);
             }
 
-            $request_question_id = $_REQUEST['question_id'] ?? null;
-
-            if (is_null($request_question_id)) {
-                Response::setStatusCode(400);
-                return Response::json(['message' => 'Failed to delete question.', 'errors' => ['question_id' => 'Question ID must be specified in the query parameters.']]);
-            }
-
             if (!Application::$APP->getUser()->isAdmin() && !Application::$APP->getUser()->isTeacher()) {
                 Response::setStatusCode(403);
                 return Response::json(['message' => 'You are not allowed to delete questions.']);
             }
 
-            $user = Question::findOne(['question_id' => $request_question_id]);
+            $request_question_id = $_REQUEST['question_id'] ?? null;
 
-            if (is_null($user)) {
+            if (is_null($request_question_id)) {
+                Response::setStatusCode(400);
+                return Response::json(['message' => 'Failed to delete question, question_id must be specified in the query parameters.']);
+            }
+
+            $question = Question::findOne(['question_id' => $request_question_id]);
+
+            if (is_null($question)) {
                 Response::setStatusCode(404);
                 return Response::json(['message' => 'Question with question_id ' . $request_question_id . ' not found.']);
             }
 
-            if ($user->delete()) {
-                Response::setStatusCode(200);
-                return Response::json(['message' => 'Question deleted successfully !']);
-            } else {
+            if (!$question->delete()) {
                 Response::setStatusCode(500);
-                return Response::json(['message' => 'Failed to delete question.']);
+                return Response::json(['message' => 'Something went wrong when deleting question.']);
             }
+
+            Response::setStatusCode(200);
+            return Response::json(['message' => 'Question deleted successfully !']);
         } catch (Exception) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when deleting question.']);
