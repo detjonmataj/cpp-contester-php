@@ -37,8 +37,7 @@ class APIUserController extends BaseController
 
             Response::setStatusCode(200);
             return Response::json($users);
-        } catch (Exception $e) {
-            return Response::json(['message' => $e->getMessage()]);
+        } catch (Exception) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when retrieving users.']);
         }

@@ -9,6 +9,7 @@ require_once 'controllers/UserController.php';
 require_once 'controllers/UserLevelController.php';
 require_once 'controllers/QuestionController.php';
 require_once 'controllers/QuestionLevelController.php';
+require_once 'controllers/QuestionCategoryController.php';
 
 // misc
 $app->getRouter()->get('/', [SiteController::class, 'home']);
@@ -45,4 +46,6 @@ $app->getRouter()->get('/question_levels/create', [QuestionLevelController::clas
 $app->getRouter()->get('/question_levels/edit', [QuestionLevelController::class, 'edit']);
 
 // question categories
-$app->getRouter()->get('/question_categories', [QuestionController::class, 'categories']);
+$app->getRouter()->get('/question_categories', [QuestionCategoryController::class, 'list']);
+$app->getRouter()->get('/question_categories/create', [QuestionCategoryController::class, 'create']);
+$app->getRouter()->get('/question_categories/edit', [QuestionCategoryController::class, 'edit']);

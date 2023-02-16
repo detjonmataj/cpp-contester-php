@@ -1006,14 +1006,23 @@ VALUES (1, 'Admin'),
 
 INSERT
 IGNORE INTO `users` (`user_id`, `first_name`, `last_name`, `username`, `password`, `email`, `user_level_id`, `created_by`)
-VALUES (1, 'Detjon', 'Mataj', 'admin1', '{{admin_password}}', 'admin1@cpp.edu', 1, 'admin1');
-
-INSERT
-IGNORE INTO `users` (`user_id`, `first_name`, `last_name`, `username`, `password`, `email`, `user_level_id`, `created_by`)
-VALUES (2, 'Drin', 'Karkini', 'admin2', '{{admin_password}}', 'admin2@cpp.edu', 1, 'admin2');
+VALUES (1, 'Detjon', 'Mataj', 'admin1', '{{admin_password}}', 'admin1@cpp.edu', 1, 'admin1'),
+       (2, 'Drin', 'Karkini', 'admin2', '{{admin_password}}', 'admin2@cpp.edu', 1, 'admin2');
 
 INSERT
 IGNORE INTO `question_levels`
 VALUES (1, 'Easy'),
        (2, 'Medium'),
        (3, 'Hard');
+
+INSERT
+IGNORE INTO `question_categories`
+VALUES (1,'Dynamic Programming'),
+       (2,'Graph Theory'),
+       (3,'Recursion'),
+       (4,'Sorting'),
+       (5,'Searching'),
+       (6,'Brute Force'),
+       (7,'Greedy'),
+       (8,'Divide & Conquer'),
+       (9,'AdHoc');

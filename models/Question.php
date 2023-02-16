@@ -11,9 +11,9 @@ class Question extends DbModel
     public int $user_id;
     public string $created_at;
     public int $question_level_id = 1;
+    public ?int $question_category_id = null;
 
     private ?int $volume_id;
-    private ?int $question_category_id;
 
     private const TABLE_NAME = 'questions';
 
@@ -38,6 +38,7 @@ class Question extends DbModel
             'hint' => 'Hint',
             'user_id' => 'Created by',
             'question_level_id' => 'Difficulty',
+            'question_category_id' => 'Category',
         ];
     }
 
@@ -53,7 +54,7 @@ class Question extends DbModel
      */
     public function attributes(): array
     {
-        return ['title', 'description', 'hint', 'user_id', 'question_level_id'];
+        return ['title', 'description', 'hint', 'user_id', 'question_level_id', 'question_category_id'];
     }
 
     public static function findOne(array $where, string $tableName = self::TABLE_NAME): ?Question
