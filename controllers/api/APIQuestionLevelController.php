@@ -58,8 +58,7 @@ class APIQuestionLevelController extends BaseController
             $question_level->question_level_id = (int)$question_level_id;
             Response::setStatusCode(201);
             return Response::json($question_level);
-        } catch (Exception $e) {
-            return Response::json(['message' => $e->getMessage()]);
+        } catch (Exception) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when creating question level.']);
         }
