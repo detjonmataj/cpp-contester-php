@@ -13,7 +13,7 @@ class User extends DbModel
     public string $created_by;
     public int $user_level_id;
     public string $created_at;
-    public string|null $birthday;
+    public string|null $birthday = null;
 
     // Important: To skip mapping columns from findOne and findAll methods, mark the properties as private
     private int|null $questions_submitted;

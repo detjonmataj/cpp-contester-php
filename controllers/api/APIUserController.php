@@ -2,7 +2,6 @@
 
 require_once 'core/BaseController.php';
 require_once 'models/User.php';
-require_once 'core/Response.php';
 
 class APIUserController extends BaseController
 {
