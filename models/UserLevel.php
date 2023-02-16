@@ -6,7 +6,7 @@ class UserLevel extends DbModel
 {
     public int $user_level_id;
     public string $name;
-    public string $description;
+    public string|null $description = null;
 
     private const TABLE_NAME = 'user_levels';
 
@@ -44,7 +44,7 @@ class UserLevel extends DbModel
         return ['name', 'description'];
     }
 
-    public static function findOne(array $where, $tableName = self::TABLE_NAME): ?User
+    public static function findOne(array $where, $tableName = self::TABLE_NAME): ?UserLevel
     {
         return parent::findOne($where, $tableName);
     }
