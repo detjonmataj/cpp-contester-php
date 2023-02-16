@@ -5,13 +5,13 @@ require_once 'core/DbModel.php';
 class User extends DbModel
 {
     public int $user_id;
-    public string $first_name;
-    public string $last_name;
-    public string $username;
-    public string $password;
-    public string $email;
-    public string $created_by;
-    public int $user_level_id;
+    public string $first_name = '';
+    public string $last_name = '';
+    public string $username = '';
+    public string $password = '';
+    public string $email = '';
+    public string $created_by = '';
+    public int $user_level_id = 3;
     public string $created_at;
     public ?string $birthday = null;
 
@@ -25,6 +25,9 @@ class User extends DbModel
 
     public function save(): string|false
     {
+        if (empty($this->created_by)) {
+            $this->created_by = $this->username;
+        }
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
         return parent::save();
     }
@@ -101,7 +104,7 @@ class User extends DbModel
         return parent::findOne($where, $tableName);
     }
 
-    public static function findAll(array $where, array $extraClauses, string $tableName = self::TABLE_NAME ): ?array
+    public static function findAll(array $where, array $extraClauses, string $tableName = self::TABLE_NAME): ?array
     {
         return parent::findAll($where, $extraClauses, $tableName);
     }

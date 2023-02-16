@@ -100,7 +100,7 @@ abstract class DbModel extends BaseModel
         }
 
         if (!empty($extraClauses)) {
-            $query .= implode(' ', $extraClauses);
+            $query .= ' ' . implode(' ', $extraClauses);
         }
 
         $query .= ';';
@@ -109,6 +109,8 @@ abstract class DbModel extends BaseModel
         foreach ($where as $k => $v) {
             $stmt->bindValue(":$k", $v);
         }
+
+//        return [$stmt->queryString];
 
         $stmt->execute();
         $obj = @$stmt->fetchAll(PDO::FETCH_CLASS, static::class);

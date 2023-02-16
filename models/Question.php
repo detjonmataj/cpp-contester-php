@@ -1,16 +1,16 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once 'core/DbModel.php';
 
 class Question extends DbModel
 {
     public int $question_id;
-    public string $title;
-    public string $description;
+    public string $title = '';
+    public string $description = '';
     public string $hint = '';
     public int $user_id;
     public string $created_at;
-    public int $question_level_id;
+    public int $question_level_id = 1;
 
     private ?int $volume_id;
     private ?int $question_category_id;
@@ -34,6 +34,8 @@ class Question extends DbModel
     {
         return [
             'title' => 'Title',
+            'description' => 'Description',
+            'hint' => 'Hint',
             'user_id' => 'Created by',
             'question_level_id' => 'Difficulty',
         ];

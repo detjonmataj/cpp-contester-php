@@ -2,13 +2,12 @@
 
 require_once 'core/DbModel.php';
 
-class UserLevel extends DbModel
+class QuestionLevel extends DbModel
 {
-    public int $user_level_id;
+    public int $question_level_id;
     public string $name = '';
-    public ?string $description = null;
 
-    private const TABLE_NAME = 'user_levels';
+    private const TABLE_NAME = 'question_levels';
 
     public function rules(): array
     {
@@ -25,7 +24,6 @@ class UserLevel extends DbModel
     {
         return [
             'name' => 'Name',
-            'description' => 'Description',
         ];
     }
 
@@ -41,22 +39,21 @@ class UserLevel extends DbModel
      */
     public function attributes(): array
     {
-        return ['name', 'description'];
+        return ['name'];
     }
 
-    public static function findOne(array $where, $tableName = self::TABLE_NAME): ?UserLevel
+    public static function findOne(array $where, string $tableName = self::TABLE_NAME): ?QuestionLevel
     {
         return parent::findOne($where, $tableName);
     }
 
-    public static function findAll(array $where, array $extraClauses, $tableName = self::TABLE_NAME): ?array
+    public static function findAll(array $where, array $extraClauses, string $tableName = self::TABLE_NAME): ?array
     {
         return parent::findAll($where, $extraClauses, $tableName);
     }
 
-
     public function primaryKey(): string
     {
-        return 'user_level_id';
+        return 'question_level_id';
     }
 }
