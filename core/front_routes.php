@@ -10,6 +10,8 @@ require_once 'controllers/UserLevelController.php';
 require_once 'controllers/QuestionController.php';
 require_once 'controllers/QuestionLevelController.php';
 require_once 'controllers/QuestionCategoryController.php';
+require_once 'controllers/ProgrammingLanguageController.php';
+require_once 'controllers/SubmissionController.php';
 
 // misc
 $app->getRouter()->get('/', [SiteController::class, 'home']);
@@ -54,3 +56,13 @@ $app->getRouter()->get('/question_categories/edit', [QuestionCategoryController:
 $app->getRouter()->get('/test_cases', [TestCaseController::class, 'list']);
 $app->getRouter()->get('/test_cases/create', [TestCaseController::class, 'create']);
 $app->getRouter()->get('/test_cases/edit', [TestCaseController::class, 'edit']);
+
+// programming_languages
+$app->getRouter()->get('/programming_languages', [ProgrammingLanguageController::class, 'list']);
+$app->getRouter()->get('/programming_languages/create', [ProgrammingLanguageController::class, 'create']);
+$app->getRouter()->get('/programming_languages/edit', [ProgrammingLanguageController::class, 'edit']);
+
+// submissions
+$app->getRouter()->get('/submissions', [SubmissionController::class, 'list']);
+$app->getRouter()->get('/submissions/create', [SubmissionController::class, 'create']);
+$app->getRouter()->get('/submissions/edit', [SubmissionController::class, 'edit']);

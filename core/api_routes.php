@@ -6,6 +6,8 @@ require_once 'controllers/api/APIQuestionController.php';
 require_once 'controllers/api/APIQuestionLevelController.php';
 require_once 'controllers/api/APIQuestionCategoryController.php';
 require_once 'controllers/api/APITestCaseController.php';
+require_once 'controllers/api/APIProgrammingLanguageController.php';
+require_once 'controllers/api/APISubmissionController.php';
 
 // users
 $app->getRouter()->get('/api/users', [APIUserController::class, 'get']);
@@ -42,3 +44,15 @@ $app->getRouter()->get('/api/test_cases', [APITestCaseController::class, 'get'])
 $app->getRouter()->post('/api/test_cases/create', [APITestCaseController::class, 'create']);
 $app->getRouter()->put('/api/test_cases/update', [APITestCaseController::class, 'update']);
 $app->getRouter()->delete('/api/test_cases/delete', [APITestCaseController::class, 'delete']);
+
+// programming_languages
+$app->getRouter()->get('/api/programming_languages', [APIProgrammingLanguageController::class, 'get']);
+$app->getRouter()->post('/api/programming_languages/create', [APIProgrammingLanguageController::class, 'create']);
+$app->getRouter()->put('/api/programming_languages/update', [APIProgrammingLanguageController::class, 'update']);
+$app->getRouter()->delete('/api/programming_languages/delete', [APIProgrammingLanguageController::class, 'delete']);
+
+// submissions
+$app->getRouter()->get('/api/submissions', [APISubmissionController::class, 'get']);
+$app->getRouter()->post('/api/submissions/create', [APISubmissionController::class, 'create']);
+$app->getRouter()->put('/api/submissions/update', [APISubmissionController::class, 'update']);
+$app->getRouter()->delete('/api/submissions/delete', [APISubmissionController::class, 'delete']);

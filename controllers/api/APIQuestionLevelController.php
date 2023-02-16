@@ -41,7 +41,7 @@ class APIQuestionLevelController extends BaseController
                 return Response::json(['message' => 'You are not logged in.']);
             }
 
-            if (!Application::$APP->getUser()->isAdmin() && !Application::$APP->getUser()->isTeacher()) {
+            if (Application::$APP->getUser()->isStudent() ) {
                 Response::setStatusCode(403);
                 return Response::json(['message' => 'You are not allowed to create question levels.']);
             }
@@ -72,7 +72,7 @@ class APIQuestionLevelController extends BaseController
                 return Response::json(['message' => 'You are not logged in.']);
             }
 
-            if (!Application::$APP->getUser()->isAdmin() && !Application::$APP->getUser()->isTeacher()) {
+            if (Application::$APP->getUser()->isStudent() ) {
                 Response::setStatusCode(403);
                 return Response::json(['message' => 'You are not allowed to edit question levels.']);
             }
@@ -114,7 +114,7 @@ class APIQuestionLevelController extends BaseController
                 return Response::json(['message' => 'You are not logged in.']);
             }
 
-            if (!Application::$APP->getUser()->isAdmin() && !Application::$APP->getUser()->isTeacher()) {
+            if (Application::$APP->getUser()->isStudent() ) {
                 Response::setStatusCode(403);
                 return Response::json(['message' => 'You are not allowed to delete question levels.']);
             }
