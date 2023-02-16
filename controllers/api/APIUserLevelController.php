@@ -15,7 +15,7 @@ class APIUserLevelController extends BaseController
 
             if (!Application::$APP->getUser()->isAdmin()) {
                 Response::setStatusCode(403);
-                return Response::json(['message' => 'You are not allowed to retrieve user levels.']);
+                return Response::json(['message' => 'You are not allowed to view user levels.']);
             }
 
             if (!empty($_GET)) {

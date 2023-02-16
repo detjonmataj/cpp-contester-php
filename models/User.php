@@ -11,12 +11,15 @@ class User extends DbModel
     public string $password = '';
     public string $email = '';
     public string $created_by = '';
-    public int $user_level_id = 3;
-    public string $created_at;
     public ?string $birthday = null;
+    public int $user_level_id = 3;
+
+    // Important: Don't initialize fields that are not displayed in the frontend
+    public string $created_at;
 
     // Important: To skip mapping columns from findOne and findAll methods, mark the properties as private
-    // For columns that are skipped from mapping a default value is not required, but we have to specify the type as ?{data_type}
+    // For columns that are skipped from mapping a default value is not required, but we have to specify the type as {data_type}, use ?{data_type} for nullable columns
+    // TODO: Enable these fields after implementing submission and judging of questions
     private ?int $questions_submitted;
     private ?int $questions_solved;
     private ?int $questions_rejected;
@@ -126,6 +129,11 @@ class User extends DbModel
     }
 
     public function isTeacher(): bool
+    {
+        return $this->user_level_id === 2;
+    }
+
+    public function isStudent(): bool
     {
         return $this->user_level_id === 2;
     }

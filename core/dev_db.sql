@@ -356,7 +356,7 @@ CREATE TABLE IF NOT EXISTS `programming_languages`
     VARCHAR
 (
     50
-) UNIQUE NOT NULL,
+) UNIQUE /*TODO: This should not be unique because there can be different versions of the same programming language*/ NOT NULL,
     `version` VARCHAR
 (
     20

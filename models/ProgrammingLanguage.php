@@ -2,21 +2,22 @@
 
 require_once 'core/DbModel.php';
 
-class TestCase extends DbModel
+class ProgrammingLanguage extends DbModel
 {
-    public int $test_case_id;
-    public string $input = '';
-    public string $output = '';
-    public int $question_id = -1;
+    public int $programming_language_id;
+    public string $name = '';
+    public string $version = '';
 
-    private const TABLE_NAME = 'test_cases';
+    public string $logo = '';
+    public string $compiler_path = '';
+
+    private const TABLE_NAME = 'programming_languages';
 
     public function rules(): array
     {
         return [
-            'input' => [self::RULE_REQUIRED],
-            'output' => [self::RULE_REQUIRED],
-            'question_id' => [self::RULE_REQUIRED],
+            'name' => [self::RULE_REQUIRED],
+            'version' => [self::RULE_REQUIRED]
         ];
     }
 
@@ -27,9 +28,8 @@ class TestCase extends DbModel
     public function labels(): array
     {
         return [
-            'input' => 'Input',
-            'output' => 'Output',
-            'question_id' => 'Question',
+            'name' => 'Programming Language',
+            'version' => 'Version',
         ];
     }
 
@@ -45,10 +45,10 @@ class TestCase extends DbModel
      */
     public function attributes(): array
     {
-        return ['input', 'output', 'question_id'];
+        return ['name', 'version', 'logo', 'compiler_path'];
     }
 
-    public static function findOne(array $where, string $tableName = self::TABLE_NAME): ?TestCase
+    public static function findOne(array $where, string $tableName = self::TABLE_NAME): ?ProgrammingLanguage
     {
         return parent::findOne($where, $tableName);
     }
@@ -60,6 +60,6 @@ class TestCase extends DbModel
 
     public function primaryKey(): string
     {
-        return 'test_case_id';
+        return 'programming_language_id';
     }
 }

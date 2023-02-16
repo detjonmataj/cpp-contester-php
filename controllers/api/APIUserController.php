@@ -15,9 +15,15 @@ class APIUserController extends BaseController
 
             if (!empty($_GET)) {
                 $user = User::findOne($_GET);
+
                 if (is_null($user)) {
                     Response::setStatusCode(404);
                     return Response::json(['message' => 'User not found.']);
+                }
+
+                if (!Application::$APP->getUser()->isAdmin() && $user->user_id !== Application::$APP->getUser()->user_id) {
+                    Response::setStatusCode(403);
+                    return Response::json(['message' => 'You are not allowed to view this user.']);
                 }
 
                 unset($user->password);

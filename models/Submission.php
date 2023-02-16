@@ -2,27 +2,27 @@
 
 require_once 'core/DbModel.php';
 
-class Question extends DbModel
+class Submission extends DbModel
 {
-    public int $question_id;
-    public string $title = '';
-    public string $description = '';
-    public string $hint = '';
+    public int $submission_id;
+    public string $code = '';
+    public string $status_name = '';
+    public string $error_message = '';
+    public int $question_id = -1;
     public int $user_id = -1;
-    public int $question_level_id = 1;
-    public ?int $question_category_id = null;
+    public int $programming_language_id = -1;
+
     public string $created_at;
 
-    private ?int $volume_id;
+    // TODO: Enable this when the assignment CRUD API is implemented
+    private ?int $assignment_id;
 
-    private const TABLE_NAME = 'questions';
+    private const TABLE_NAME = 'submissions';
 
     public function rules(): array
     {
         return [
-            'title' => [self::RULE_REQUIRED],
-            'user_id' => [self::RULE_REQUIRED],
-            'question_level_id' => [self::RULE_REQUIRED],
+            'code' => [self::RULE_REQUIRED],
         ];
     }
 
@@ -33,12 +33,7 @@ class Question extends DbModel
     public function labels(): array
     {
         return [
-            'title' => 'Title',
-            'description' => 'Description',
-            'hint' => 'Hint',
-            'user_id' => 'Created by',
-            'question_level_id' => 'Difficulty',
-            'question_category_id' => 'Category',
+            'code' => 'Code',
         ];
     }
 
@@ -54,10 +49,10 @@ class Question extends DbModel
      */
     public function attributes(): array
     {
-        return ['title', 'description', 'hint', 'user_id', 'question_level_id', 'question_category_id'];
+        return ['code', 'status_name', 'error_message', 'question_id', 'user_id', 'programming_language_id'];
     }
 
-    public static function findOne(array $where, string $tableName = self::TABLE_NAME): ?Question
+    public static function findOne(array $where, string $tableName = self::TABLE_NAME): ?Submission
     {
         return parent::findOne($where, $tableName);
     }
@@ -69,6 +64,6 @@ class Question extends DbModel
 
     public function primaryKey(): string
     {
-        return 'question_id';
+        return 'submission_id';
     }
 }
