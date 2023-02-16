@@ -12,6 +12,10 @@ class AccountController extends BaseController {
 
         if (Application::$APP->getUser()->isAdmin())
             $this->layout = 'admin';
+        else if (Application::$APP->getUser()->isTeacher())
+            $this->layout = 'teacher';
+        else
+            $this->layout = 'student';
 
         $user = Application::$APP->getUser();
         $userLevels = array_map(fn($x) => [$x->user_level_id => $x->name], UserLevel::findAll([], []));

@@ -8,7 +8,13 @@ class SiteController extends BaseController
     {
         $data = ['name' => Application::$APP->name()];
         if(Application::$APP->isAuthenticated()) {
-            $this->layout = 'admin';
+            if (Application::$APP->getUser()->isAdmin()) {
+                $this->layout = 'admin';
+            } else if (Application::$APP->getUser()->isTeacher()) {
+                $this->layout = 'teacher';
+            } else {
+                $this->layout = 'student';
+            }
             return Application::$APP->getRouter()->renderView('home.auth', $data);
         }
         return Application::$APP->getRouter()->renderView('home', $data);
