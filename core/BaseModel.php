@@ -10,7 +10,7 @@ abstract class BaseModel
     public const RULE_UNIQUE = 'unique';
     public const RULE_PREG_MATCH = 'preg_match';
 
-    public array $errors = [];
+    private array $errors = [];
 
     /**
      * @param $data - will get the data from the request and load it in the current model

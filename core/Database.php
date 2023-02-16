@@ -16,4 +16,9 @@ class Database
     {
         return Application::$APP->getDb()->pdo->prepare($sql);
     }
+
+    public function lastInsertId(): false|string
+    {
+        return Application::$APP->getDb()->pdo->lastInsertId();
+    }
 }

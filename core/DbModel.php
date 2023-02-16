@@ -21,7 +21,7 @@ abstract class DbModel extends BaseModel
      * Generic query to save DB models, you don't have to write a separate query for each model
      * Just make sure to define attributes correctly for each model
      */
-    public function save(): bool
+    public function save(): string|false
     {
         $tableName = $this->tableName();
         $attributes = $this->attributes();
@@ -32,7 +32,11 @@ abstract class DbModel extends BaseModel
         foreach ($attributes as $attribute) {
             $stmt->bindValue(":$attribute", $this->{$attribute});
         }
-        return $stmt->execute();
+
+        if ($stmt->execute()) {
+            return self::lastInsertId();
+        }
+        return false;
     }
 
     public function update(): bool
@@ -59,6 +63,11 @@ abstract class DbModel extends BaseModel
     public static function prepare($sql): false|PDOStatement
     {
         return Application::$APP->getDb()->prepare($sql);
+    }
+
+    public static function lastInsertId(): false|string
+    {
+        return Application::$APP->getDb()->lastInsertId();
     }
 
     /**

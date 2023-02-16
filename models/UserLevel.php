@@ -4,6 +4,7 @@ require_once 'core/DbModel.php';
 
 class UserLevel extends DbModel
 {
+    public int $user_level_id;
     public string $name;
     public string $description;
 
