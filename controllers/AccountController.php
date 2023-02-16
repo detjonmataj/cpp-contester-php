@@ -5,7 +5,18 @@ class AccountController extends BaseController {
 
     public function account(): string|array|false
     {
-        return Application::$APP->getRouter()->renderView('init', ['endpoint' =>'account']);
+        if(!Application::$APP->isAuthenticated()) {
+            Response::redirect('/login');
+            exit;
+        }
+
+        if (Application::$APP->getUser()->isAdmin())
+            $this->layout = 'admin';
+
+        $user = Application::$APP->getUser();
+        $userLevels = array_map(fn($x) => [$x->user_level_id => $x->name], UserLevel::findAll([], []));
+
+        return Application::$APP->getRouter()->renderView('account', ['model' => $user, 'userLevels' => $userLevels]);
     }
 
 }
