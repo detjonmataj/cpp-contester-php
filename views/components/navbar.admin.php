@@ -1,6 +1,7 @@
 <?php
 require_once 'core/Navbar.php';
 require_once 'core/ListItem.php';
+require_once 'core/Div.php';
 
 $navbar = new Navbar(
     (new NavbarItem(new LinkModel(Application::$APP->name(), '/', '', '')))->header(),
@@ -15,9 +16,11 @@ $navbar = new Navbar(
             (new ListItem(new LinkModel('All Users', 'users', '', 'dropdown-item'))),
             (new ListItem(new LinkModel('User Levels', 'user_levels', '', 'dropdown-item'))),
         ])))->dropdown(),
-        (new NavbarItem(new LinkModel(Application::$APP->getUser()?->getDisplayName(), '/account', '', '')))->link(),
+        (new NavbarItem(new UListModel(Application::$APP->getUser()?->getDisplayName(), '/account', '', '', [
+            (new ListItem(new LinkModel('Account Settings', '/account', '', 'dropdown-item'))),
+            (new ListItem(new LinkModel('Logout', '/logout', '', 'dropdown-item'))),
+        ])))->dropdown(),
         (new NavbarItem(new LinkModel('⚙', '/settings', '', '')))->link(),
-        (new NavbarItem(new LinkModel('Logout', '/logout', '', '')))->link(),
     ]
 );
 
