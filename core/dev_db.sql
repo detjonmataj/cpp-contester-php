@@ -999,9 +999,9 @@ CREATE TABLE IF NOT EXISTS `favourite_questions`
     );
 
 INSERT IGNORE INTO `user_levels` (`user_level_id`, `name`)
-VALUES (1, 'Student'),
+VALUES (1, 'Admin'),
        (2, 'Teacher'),
-       (3, 'Admin');
+       (3, 'Student');
 
 INSERT IGNORE INTO `users` (`user_id`, `first_name`, `last_name`, `username`, `password`, `email`, `user_level_id`, `created_by`)
 VALUES (1, 'Detjon', 'Mataj', 'admin1', '{{admin_password}}', 'admin1@cpp.edu', 3, 'admin1');

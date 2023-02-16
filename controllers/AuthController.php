@@ -16,9 +16,7 @@ class AuthController extends BaseController
         $loginForm = new LoginModel();
         if(Request::isPost()) {
             $loginForm->loadData(Request::requestBody());
-
-            //TODO: Need to change validation logic here, login validation should be separate from resource create/update validation
-            if($loginForm->validate(ValidateMode::CREATE) && $loginForm->login()) {
+            if($loginForm->validate() && $loginForm->login()) {
                 Response::redirect('/');
                 return null;
             }
@@ -34,7 +32,7 @@ class AuthController extends BaseController
         $user = new User();
         if(Request::isPost()) {
             $user->loadData(Request::requestBody());
-            if($user->validate(ValidateMode::CREATE) && $user->save()) {
+            if($user->validate() && $user->save()) {
                 Response::redirect('/');
                 exit;
             }

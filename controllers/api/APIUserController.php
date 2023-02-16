@@ -48,7 +48,7 @@ class APIUserController extends BaseController
                 return Response::json(['message' => 'You are not logged in.']);
             }
 
-            if (Application::$APP->getUser()->user_level_id !== 3) {
+            if (!Application::$APP->getUser()->isAdmin()) {
                 Response::setStatusCode(403);
                 return Response::json(['message' => 'You are not allowed to create users.']);
             }
@@ -56,15 +56,16 @@ class APIUserController extends BaseController
             $user = new User();
             $user->loadData(Request::requestBody());
 
-            if ($user->validate(ValidateMode::CREATE)) {
-                $user->save();
-                unset($user->password);
-                Response::setStatusCode(201);
-                return Response::json($user);
-            } else {
-                Response::setStatusCode(400);
-                return Response::json(['message' => 'Failed to create user', 'errors' => $user->getErrors()]);
+            $user_id = $user->save();
+            if (!$user_id) {
+                Response::setStatusCode(500);
+                return Response::json(['message' => 'Something went wrong when creating user.']);
             }
+
+            $user->user_id = (int)$user_id;
+            unset($user->password);
+            Response::setStatusCode(201);
+            return Response::json($user);
         } catch (Exception) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when creating user.']);
@@ -79,36 +80,35 @@ class APIUserController extends BaseController
                 return Response::json(['message' => 'You are not logged in.']);
             }
 
-            $request_user_id = $_REQUEST['user_id'] ?? null;
+            $request_user_id = (int)$_REQUEST['user_id'] ?? null;
 
             if (is_null($request_user_id)) {
                 Response::setStatusCode(400);
                 return Response::json(['message' => 'Failed to edit user.', 'errors' => ['user_id' => 'User ID must be specified in the query parameters.']]);
             }
 
-            if (Application::$APP->getUser()->user_level_id !== 3 && $request_user_id !== Application::$APP->getUser()->user_id) {
+            if (!Application::$APP->getUser()->isAdmin() && $request_user_id !== Application::$APP->getUser()->user_id) {
                 Response::setStatusCode(403);
                 return Response::json(['message' => 'You are not allowed to edit other users.']);
             }
 
-            $user = User::findOne(['user_id' => $request_user_id]);
-
-            if (is_null($user)) {
+            if (is_null(User::findOne(['user_id' => $request_user_id]))) {
                 Response::setStatusCode(404);
                 return Response::json(['message' => 'User with user_id ' . $request_user_id . ' not found.']);
             }
 
+            $user = new User();
             $user->loadData(Request::requestBody());
+            $user->user_id = $request_user_id;
 
-            if ($user->validate(ValidateMode::UPDATE)) {
-                $user->update();
-                unset($user->password);
-                Response::setStatusCode(200);
-                return Response::json($user);
-            } else {
-                Response::setStatusCode(400);
-                return Response::json(['message' => 'Failed to edit user.', 'errors' => $user->getErrors()]);
+            if (!$user->update()) {
+                Response::setStatusCode(500);
+                return Response::json(['message' => 'Something went wrong when editing user.']);
             }
+
+            unset($user->password);
+            Response::setStatusCode(200);
+            return Response::json($user);
         } catch (Exception) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when editing user.']);
@@ -130,7 +130,7 @@ class APIUserController extends BaseController
                 return Response::json(['message' => 'Failed to delete user.', 'errors' => ['user_id' => 'User ID must be specified in the query parameters.']]);
             }
 
-            if (Application::$APP->getUser()->user_level_id !== 3 && $request_user_id !== Application::$APP->getUser()->user_id) {
+            if (!Application::$APP->getUser()->isAdmin() && $request_user_id !== Application::$APP->getUser()->user_id) {
                 Response::setStatusCode(403);
                 return Response::json(['message' => 'You are not allowed to delete other users.']);
             }

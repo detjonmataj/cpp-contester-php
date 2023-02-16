@@ -10,16 +10,11 @@ class UserLevel extends DbModel
 
     private const TABLE_NAME = 'user_levels';
 
-    public function createRules(): array
+    public function rules(): array
     {
         return [
             'name' => [self::RULE_REQUIRED],
         ];
-    }
-
-    public function updateRules(): array
-    {
-        return [];
     }
 
     /**

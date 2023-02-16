@@ -13,16 +13,16 @@ class User extends DbModel
     public string $created_by;
     public int $user_level_id;
     public string $created_at;
+    public string|null $birthday;
 
     // Important: To skip mapping columns from findOne and findAll methods, mark the properties as private
-    private string|null $birthday;
     private int|null $questions_submitted;
     private int|null $questions_solved;
     private int|null $questions_rejected;
 
     private const TABLE_NAME = 'users';
 
-    public function save(): bool
+    public function save(): string|false
     {
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
         return parent::save();
@@ -30,11 +30,25 @@ class User extends DbModel
 
     public function update(): bool
     {
-        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
-        return parent::update();
+        $tableName = $this->tableName();
+        $attributes = $this->attributes();
+
+        if (empty($this->password)) {
+            unset($attributes[array_search('password', $attributes)]);
+        } else {
+            $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+        }
+
+        $sql = "update $tableName set " . implode(',', array_map(fn($x) => "$x = :$x", $attributes))
+            . " where " . $this->primaryKey() . " = " . $this->{$this->primaryKey()};
+        $stmt = self::prepare($sql);
+        foreach ($attributes as $attribute) {
+            $stmt->bindValue(":$attribute", $this->{$attribute});
+        }
+        return $stmt->execute();
     }
 
-    public function createRules(): array
+    public function rules(): array
     {
         // At least 1 uppercase letter, 1 number, 1 special character, 8-32 characters
         $passwordRegex = "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$/";
@@ -46,15 +60,6 @@ class User extends DbModel
             'password' => [self::RULE_REQUIRED, [self::RULE_PREG_MATCH, $passwordRegex, "Password very week"]],
             'created_by' => [self::RULE_REQUIRED],
             'user_level_id' => [self::RULE_REQUIRED],
-        ];
-    }
-
-    public function updateRules(): array
-    {
-        // At least 1 uppercase letter, 1 number, 1 special character, 8-32 characters
-        $passwordRegex = "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$/";
-        return [
-            'password' => [[self::RULE_PREG_MATCH, $passwordRegex, "Password very week"]],
         ];
     }
 
@@ -87,7 +92,7 @@ class User extends DbModel
      */
     public function attributes(): array
     {
-        return ['first_name', 'last_name', 'username', 'email', 'password', 'created_by', 'user_level_id'];
+        return ['first_name', 'last_name', 'username', 'email', 'password', 'created_by', 'user_level_id', 'birthday'];
     }
 
     public static function findOne(array $where, string $tableName = self::TABLE_NAME): ?User
@@ -109,5 +114,10 @@ class User extends DbModel
     public function getDisplayName(): string
     {
         return $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->user_level_id === 1;
     }
 }

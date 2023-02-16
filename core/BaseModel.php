@@ -1,7 +1,5 @@
 <?php
 
-require 'enums/ValidateMode.php';
-
 abstract class BaseModel
 {
     public const RULE_REQUIRED = 'required';
@@ -11,8 +9,6 @@ abstract class BaseModel
     public const RULE_MAX = 'max';
     public const RULE_UNIQUE = 'unique';
     public const RULE_PREG_MATCH = 'preg_match';
-
-    private ValidateMode $validateMode;
 
     private array $errors = [];
 
@@ -30,24 +26,14 @@ abstract class BaseModel
     }
 
     /**
-     * @return array - An associative array with rules for creating resources
+     * @return array - An associative array with rules
      * If you want your password to be not only a required field but also a valid password you return an array of:
      * [RULE_REQUIRED, [RULE_PREG_MATCH, 'regex_pattern', 'Error message in case the matching fails']]
      * RULE_REQUIRED and RULE_EMAIL can be passed directly
      * RULE_MIN and RULE_MAX need another value, so you have to pass an array with two values, one for the rule and one for the boundary
      * RULE_PREG_MATCH needs the pattern and the error message you want to display if the match fails, therefore you need an array with 3 items
      */
-    abstract public function createRules(): array;
-
-    /**
-     * @return array - An associative array with rules for updating resources
-     * If you want your password to be not only a required field but also a valid password you return an array of:
-     * [RULE_REQUIRED, [RULE_PREG_MATCH, 'regex_pattern', 'Error message in case the matching fails']]
-     * RULE_REQUIRED and RULE_EMAIL can be passed directly
-     * RULE_MIN and RULE_MAX need another value, so you have to pass an array with two values, one for the rule and one for the boundary
-     * RULE_PREG_MATCH needs the pattern and the error message you want to display if the match fails, therefore you need an array with 3 items
-     */
-    abstract public function updateRules(): array;
+    abstract public function rules(): array;
 
     public function labels(): array {
         return [];
@@ -69,11 +55,9 @@ abstract class BaseModel
     /**
      * @return bool - true if the model being checked passes all the self-defined rules otherwise false
      */
-    public function validate(ValidateMode $mode): bool
+    public function validate(): bool
     {
-        $validation = $mode === ValidateMode::CREATE ? $this->createRules() : $this->updateRules();
-
-        foreach ($validation as $attribute => $rules) {
+        foreach ($this->rules() as $attribute => $rules) {
             $value = $this->{$attribute};
             foreach ($rules as $rule) {
                 $ruleName = $rule;
@@ -160,7 +144,4 @@ abstract class BaseModel
         return $this->errors[$attribute][0] ?? '';
     }
 
-    public function getErrors() {
-        return $this->errors;
-    }
 }
