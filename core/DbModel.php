@@ -91,7 +91,7 @@ abstract class DbModel extends BaseModel
      */
     public static function findAll(array $where, array $extraClauses, string $tableName): ?array
     {
-        $query = "select * from $tableName ";
+        $query = "select * from $tableName";
 
         if (!empty($where)) {
             $attributes = array_keys($where);
@@ -100,7 +100,7 @@ abstract class DbModel extends BaseModel
         }
 
         if (!empty($extraClauses)) {
-            $query .= implode(' ', $extraClauses);
+            $query .= ' ' . implode(' ', $extraClauses);
         }
 
         $query .= ';';

@@ -10,7 +10,7 @@ class User extends DbModel
     public string $username = '';
     public string $password = '';
     public string $email = '';
-    public string $created_by;
+    public string $created_by = '';
     public int $user_level_id = 3;
     public string $created_at;
     public ?string $birthday = null;
@@ -25,6 +25,9 @@ class User extends DbModel
 
     public function save(): string|false
     {
+        if (empty($this->created_by)) {
+            $this->created_by = $this->username;
+        }
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
         return parent::save();
     }
