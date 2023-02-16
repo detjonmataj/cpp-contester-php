@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{title}}</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="http://localhost/assets/css/styles.css">
 </head>
 <body>
 
@@ -15,6 +15,6 @@
 </div>
 
 {{footer}}
-<script src="assets/js/main.js"></script>
+<script src="http://localhost/assets/js/main.js"></script>
 </body>
 </html>
