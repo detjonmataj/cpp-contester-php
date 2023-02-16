@@ -1,0 +1,193 @@
+*,
+::before,
+::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --backgroud-color: rgb(43, 52, 67);
+    --navbar-backgroud-color: rgb(19, 31, 47);
+    --navbar-dropdown-backgroud-color: rgb(18, 34, 50);
+    --primary-color: rgb(0, 126, 249);
+    --secondary-color: rgb(255, 255, 255);
+    --shadow: 0 0 10px 0 rgba(59, 58, 58, 0.2);
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: var(--secondary-color);
+    background-color: var(--backgroud-color);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a {
+    color: var(--secondary-color);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Poppins', sans-serif;
+}
+
+p {
+    line-height: 1.5;
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+li {
+    list-style: none;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    color: var(--primary-color);
+    background-color: var(--navbar-backgroud-color);
+}
+
+.navbar-items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-items li {
+    margin: 0 1rem;
+}
+
+.nav-item {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    width: max-content;
+    display: none;
+    flex-direction: column;
+    top: 100%;
+    background-color: var(--navbar-dropdown-backgroud-color);
+    padding: 1rem 0;
+    box-shadow: var(--shadow);
+    z-index: 1;
+    overflow: hidden;
+}
+.dropdown-menu > li {
+    max-width: fit-content;
+}
+
+.dropdown-item {
+    max-width: inherit;
+    padding: 0.5rem 1rem;
+    display: flex;
+}
+
+.show {
+    display: flex;
+}
+
+.footer {
+    display: flex;
+    height: 3rem;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: var(--navbar-backgroud-color);
+}
+
+.container {
+    min-height: calc(100vh - 6.75rem);
+}
+
+.hide {
+    display: none;
+}
+
+.account-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+input {
+    padding: 0.2rem 1rem;
+    border-radius: 0.25rem;
+    background-color: var(--backgroud-color);
+    color: var(--secondary-color);
+    font-size: 1rem;
+    outline: none;
+    width: 15rem;
+}
+
+.account-form > div > input:focus {
+    border: 1px solid var(--primary-color);
+}
+
+/*label*/
+
+.account-form > div > label {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.invalid-feedback {
+    color: red;
+}
+
+.button {
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    font-size: 1rem;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    width: 5rem;
+}
+
+.button-save {
+    background-color: var(--primary-color);
+}
+
+.button-edit {
+    background-color: #ffc107;
+}
+
+.button-cancel {
+    background: red;
+}
+
+select {
+    padding: 0.2rem 1rem;
+    border-radius: 0.25rem;
+    background-color: var(--backgroud-color);
+    color: var(--secondary-color);
+    font-size: 1rem;
+    outline: none;
+    width: 15rem;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
