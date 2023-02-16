@@ -37,7 +37,7 @@ class APIUserController extends BaseController
 
             Response::setStatusCode(200);
             return Response::json($users);
-        } catch (Exception) {
+        } catch (Exception|Error) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when retrieving users.']);
         }
@@ -69,7 +69,7 @@ class APIUserController extends BaseController
             unset($user->password);
             Response::setStatusCode(201);
             return Response::json($user);
-        } catch (Exception) {
+        } catch (Exception|Error) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when creating user.']);
         }
@@ -118,7 +118,7 @@ class APIUserController extends BaseController
             unset($user->password);
             Response::setStatusCode(200);
             return Response::json($user);
-        } catch (Exception) {
+        } catch (Exception|Error) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when editing user.']);
         }
@@ -158,7 +158,7 @@ class APIUserController extends BaseController
 
             Response::setStatusCode(200);
             return Response::json(['message' => 'User deleted successfully !']);
-        } catch (Exception) {
+        } catch (Exception|Error) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when deleting user.']);
         }

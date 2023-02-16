@@ -27,7 +27,7 @@ class APIQuestionCategoryController extends BaseController
             $question_categories = QuestionCategory::findAll([], []);
             Response::setStatusCode(200);
             return Response::json($question_categories);
-        } catch (Exception) {
+        } catch (Exception|Error) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when retrieving question categories.']);
         }
@@ -58,7 +58,7 @@ class APIQuestionCategoryController extends BaseController
             $question_category->question_category_id = (int)$question_category_id;
             Response::setStatusCode(201);
             return Response::json($question_category);
-        } catch (Exception) {
+        } catch (Exception|Error) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when creating question category.']);
         }
@@ -72,16 +72,16 @@ class APIQuestionCategoryController extends BaseController
                 return Response::json(['message' => 'You are not logged in.']);
             }
 
+            if (!Application::$APP->getUser()->isAdmin() && !Application::$APP->getUser()->isTeacher()) {
+                Response::setStatusCode(403);
+                return Response::json(['message' => 'You are not allowed to edit question categories.']);
+            }
+
             $request_question_category_id = (int)$_REQUEST['question_category_id'] ?? null;
 
             if (is_null($request_question_category_id)) {
                 Response::setStatusCode(400);
                 return Response::json(['message' => 'Failed to edit question category, question_category_id must be specified in the query parameters.']);
-            }
-
-            if (!Application::$APP->getUser()->isAdmin() && !Application::$APP->getUser()->isTeacher()) {
-                Response::setStatusCode(403);
-                return Response::json(['message' => 'You are not allowed to edit question categories.']);
             }
 
             if (is_null(QuestionCategory::findOne(['question_category_id' => $request_question_category_id]))) {
@@ -100,7 +100,7 @@ class APIQuestionCategoryController extends BaseController
 
             Response::setStatusCode(200);
             return Response::json($question_category);
-        } catch (Exception) {
+        } catch (Exception|Error) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when editing question category.']);
         }
@@ -114,16 +114,16 @@ class APIQuestionCategoryController extends BaseController
                 return Response::json(['message' => 'You are not logged in.']);
             }
 
+            if (!Application::$APP->getUser()->isAdmin() && !Application::$APP->getUser()->isTeacher()) {
+                Response::setStatusCode(403);
+                return Response::json(['message' => 'You are not allowed to delete question categories.']);
+            }
+
             $request_question_category_id = $_REQUEST['question_category_id'] ?? null;
 
             if (is_null($request_question_category_id)) {
                 Response::setStatusCode(400);
                 return Response::json(['message' => 'Failed to delete question category, question_category_id must be specified in the query parameters.']);
-            }
-
-            if (!Application::$APP->getUser()->isAdmin() && !Application::$APP->getUser()->isTeacher()) {
-                Response::setStatusCode(403);
-                return Response::json(['message' => 'You are not allowed to delete question categories.']);
             }
 
             $question_category = QuestionCategory::findOne(['question_category_id' => $request_question_category_id]);
@@ -136,12 +136,11 @@ class APIQuestionCategoryController extends BaseController
             if (!$question_category->delete()) {
                 Response::setStatusCode(500);
                 return Response::json(['message' => 'Something went wrong when deleting question category.']);
-
             }
 
             Response::setStatusCode(200);
             return Response::json(['message' => 'Question category deleted successfully !']);
-        } catch (Exception) {
+        } catch (Exception|Error) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when deleting question category.']);
         }

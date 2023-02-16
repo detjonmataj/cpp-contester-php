@@ -49,3 +49,8 @@ $app->getRouter()->get('/question_levels/edit', [QuestionLevelController::class,
 $app->getRouter()->get('/question_categories', [QuestionCategoryController::class, 'list']);
 $app->getRouter()->get('/question_categories/create', [QuestionCategoryController::class, 'create']);
 $app->getRouter()->get('/question_categories/edit', [QuestionCategoryController::class, 'edit']);
+
+// test_cases
+$app->getRouter()->get('/test_cases', [TestCaseController::class, 'list']);
+$app->getRouter()->get('/test_cases/create', [TestCaseController::class, 'create']);
+$app->getRouter()->get('/test_cases/edit', [TestCaseController::class, 'edit']);

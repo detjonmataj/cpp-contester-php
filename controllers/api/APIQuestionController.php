@@ -27,7 +27,7 @@ class APIQuestionController extends BaseController
             $questions = Question::findAll([], []);
             Response::setStatusCode(200);
             return Response::json($questions);
-        } catch (Exception) {
+        } catch (Exception|Error) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when retrieving questions.']);
         }
@@ -58,7 +58,7 @@ class APIQuestionController extends BaseController
             $question->question_id = (int)$question_id;
             Response::setStatusCode(201);
             return Response::json($question);
-        } catch (Exception) {
+        } catch (Exception|Error) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when creating question.']);
         }
@@ -91,6 +91,14 @@ class APIQuestionController extends BaseController
 
             $question = new Question();
             $question->loadData(Request::requestBody());
+
+            $question_creator_id = $question->user_id;
+
+            if (Application::$APP->getUser()->isTeacher() && Application::$APP->getUser()->user_id !== $question_creator_id) {
+                Response::setStatusCode(403);
+                return Response::json(['message' => 'You are not allowed to edit questions that you did not create.']);
+            }
+
             $question->question_id = $request_question_id;
 
             if (!$question->update()) {
@@ -100,7 +108,7 @@ class APIQuestionController extends BaseController
 
             Response::setStatusCode(200);
             return Response::json($question);
-        } catch (Exception) {
+        } catch (Exception|Error) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when editing question.']);
         }
@@ -133,6 +141,13 @@ class APIQuestionController extends BaseController
                 return Response::json(['message' => 'Question with question_id ' . $request_question_id . ' not found.']);
             }
 
+            $question_creator_id = $question->user_id;
+
+            if (Application::$APP->getUser()->isTeacher() && Application::$APP->getUser()->user_id !== $question_creator_id) {
+                Response::setStatusCode(403);
+                return Response::json(['message' => 'You are not allowed to delete questions that you did not create.']);
+            }
+
             if (!$question->delete()) {
                 Response::setStatusCode(500);
                 return Response::json(['message' => 'Something went wrong when deleting question.']);
@@ -140,7 +155,7 @@ class APIQuestionController extends BaseController
 
             Response::setStatusCode(200);
             return Response::json(['message' => 'Question deleted successfully !']);
-        } catch (Exception) {
+        } catch (Exception|Error) {
             Response::setStatusCode(500);
             return Response::json(['message' => 'Something went wrong when deleting question.']);
         }
