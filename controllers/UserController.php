@@ -4,11 +4,6 @@ require_once 'core/BaseController.php';
 
 class UserController extends BaseController
 {
-    public function edit(): string|array|false
-    {
-        return Application::$APP->getRouter()->renderView('init', ['endpoint' => '/users/edit']);
-    }
-
     public function list(): string|array|false
     {
         return Application::$APP->getRouter()->renderView('init', ['endpoint' => '/users']);
@@ -17,5 +12,10 @@ class UserController extends BaseController
     public function create(): string|array|false
     {
         return Application::$APP->getRouter()->renderView('init', ['endpoint' => '/users/create']);
+    }
+
+    public function edit(): string|array|false
+    {
+        return Application::$APP->getRouter()->renderView('init', ['endpoint' => '/users/edit']);
     }
 }

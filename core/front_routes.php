@@ -23,17 +23,23 @@ $app->getRouter()->get('/register', [AuthController::class, 'register']);
 $app->getRouter()->post('/register', [AuthController::class, 'register']);
 $app->getRouter()->get('/logout', [AuthController::class, 'logout']);
 
-// questions
-$app->getRouter()->get('/questions', [QuestionController::class, 'list']);
-$app->getRouter()->get('/question_categories', [QuestionController::class, 'categories']);
-$app->getRouter()->get('/question_levels', [QuestionController::class, 'levels']);
-
 // users
-$app->getRouter()->get('/users/edit', [UserController::class, 'edit']);
 $app->getRouter()->get('/users', [UserController::class, 'list']);
 $app->getRouter()->get('/users/create', [UserController::class, 'create']);
+$app->getRouter()->get('/users/edit', [UserController::class, 'edit']);
 
 // user_levels
-$app->getRouter()->get('/user_levels/edit', [UserLevelController::class, 'edit']);
 $app->getRouter()->get('/user_levels', [UserLevelController::class, 'list']);
 $app->getRouter()->get('/user_levels/create', [UserLevelController::class, 'create']);
+$app->getRouter()->get('/user_levels/edit', [UserLevelController::class, 'edit']);
+
+// questions
+$app->getRouter()->get('/questions', [QuestionController::class, 'list']);
+$app->getRouter()->get('/questions/create', [QuestionController::class, 'create']);
+$app->getRouter()->get('/questions/edit', [QuestionController::class, 'edit']);
+
+// question categories
+$app->getRouter()->get('/question_categories', [QuestionController::class, 'categories']);
+
+// question levels
+$app->getRouter()->get('/question_levels', [QuestionController::class, 'levels']);

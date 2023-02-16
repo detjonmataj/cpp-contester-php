@@ -998,13 +998,22 @@ CREATE TABLE IF NOT EXISTS `favourite_questions`
 )
     );
 
-INSERT IGNORE INTO `user_levels` (`user_level_id`, `name`)
+INSERT
+IGNORE INTO `user_levels` (`user_level_id`, `name`)
 VALUES (1, 'Admin'),
        (2, 'Teacher'),
        (3, 'Student');
 
-INSERT IGNORE INTO `users` (`user_id`, `first_name`, `last_name`, `username`, `password`, `email`, `user_level_id`, `created_by`)
+INSERT
+IGNORE INTO `users` (`user_id`, `first_name`, `last_name`, `username`, `password`, `email`, `user_level_id`, `created_by`)
 VALUES (1, 'Detjon', 'Mataj', 'admin1', '{{admin_password}}', 'admin1@cpp.edu', 3, 'admin1');
 
-INSERT IGNORE INTO `users` (`user_id`, `first_name`, `last_name`, `username`, `password`, `email`, `user_level_id`, `created_by`)
+INSERT
+IGNORE INTO `users` (`user_id`, `first_name`, `last_name`, `username`, `password`, `email`, `user_level_id`, `created_by`)
 VALUES (2, 'Drin', 'Karkini', 'admin2', '{{admin_password}}', 'admin2@cpp.edu', 3, 'admin2');
+
+INSERT
+IGNORE INTO `question_levels`
+VALUES (1, 'Easy'),
+       (2, 'Medium'),
+       (3, 'Hard');

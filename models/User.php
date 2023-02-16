@@ -13,12 +13,13 @@ class User extends DbModel
     public string $created_by;
     public int $user_level_id;
     public string $created_at;
-    public string|null $birthday = null;
+    public ?string $birthday = null;
 
     // Important: To skip mapping columns from findOne and findAll methods, mark the properties as private
-    private int|null $questions_submitted;
-    private int|null $questions_solved;
-    private int|null $questions_rejected;
+    // For columns that are skipped from mapping a default value is not required, but we have to specify the type as ?{data_type}
+    private ?int $questions_submitted;
+    private ?int $questions_solved;
+    private ?int $questions_rejected;
 
     private const TABLE_NAME = 'users';
 
@@ -119,5 +120,10 @@ class User extends DbModel
     public function isAdmin(): bool
     {
         return $this->user_level_id === 1;
+    }
+
+    public function isTeacher(): bool
+    {
+        return $this->user_level_id === 2;
     }
 }
