@@ -1,7 +1,7 @@
 <?php
 require_once 'core/Navbar.php';
 require_once 'core/ListItem.php';
-require_once 'core/Div.php';
+
 
 $navbar = new Navbar(
     (new NavbarItem(new LinkModel(Application::$APP->name(), '/', '', '')))->header(),
