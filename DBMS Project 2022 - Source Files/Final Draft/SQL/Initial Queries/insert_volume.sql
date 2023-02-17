@@ -1,0 +1,11 @@
+INSERT INTO `acm_db`.`volume` (`name`) VALUES ('Beginner');
+INSERT INTO `acm_db`.`volume` (`name`) VALUES ('Sorting');
+INSERT INTO `acm_db`.`volume` (`name`) VALUES ('Searching');
+INSERT INTO `acm_db`.`volume` (`name`) VALUES ('Strings');
+INSERT INTO `acm_db`.`volume` (`name`) VALUES ('Matrices');
+INSERT INTO `acm_db`.`volume` (`name`) VALUES ('Backtracking');
+INSERT INTO `acm_db`.`volume` (`name`) VALUES ('Object-Oriented Programming');
+INSERT INTO `acm_db`.`volume` (`name`) VALUES ('Data Structures');
+INSERT INTO `acm_db`.`volume` (`name`) VALUES ('Loops');
+INSERT INTO `acm_db`.`volume` (`name`) VALUES ('Functions');
+INSERT INTO `acm_db`.`volume` (`name`) VALUES ('Functional Programming');

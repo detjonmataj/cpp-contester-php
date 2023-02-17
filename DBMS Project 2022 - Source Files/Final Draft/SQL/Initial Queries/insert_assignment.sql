@@ -1,0 +1,1 @@
+INSERT INTO `acm_db`.`assignment` (`name`, `description`, `deadline`, `user_id`, `programming_language_id`, `course_id`) VALUES ('Homework week 1', 'These are the homeworks for week 1. They are beginner problems.\nBe careful to submit your homework in the given deadline', '2022-06-30T20:00:00+02:00', '2', '2', '1');
