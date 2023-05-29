@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  database:
+    container_name: contesterpp-db
+    image: mysql:8.0.32-debian
+    environment:
+      MYSQL_DATABASE: ${DATABASE_NAME}
+      MYSQL_USER: ${DATABASE_USER}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
+    ports:
+      - "3306:3306"
+    env_file: .env
+
+  web:
+    build: .
+    container_name: contesterpp-web
+    depends_on:
+      - database
+    volumes:
+      - ./:/var/www/html/
+    ports:
+      - "80:80"
+    stdin_open: true
+    tty: true
